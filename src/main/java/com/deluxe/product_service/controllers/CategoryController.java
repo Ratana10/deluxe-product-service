@@ -4,8 +4,11 @@ import com.deluxe.product_service.entities.Category;
 import com.deluxe.product_service.services.CategoryService;
 import com.deluxe.product_service.dto.CategoryRequest;
 import com.deluxe.product_service.dto.CategoryResponse;
+import com.deluxe.product_service.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -21,14 +24,23 @@ public class CategoryController {
     }
 
     @GetMapping("{id}")
-    public CategoryResponse getById(@PathVariable Long id) {
-        return this.categoryService.getById(id);
+    public ResponseEntity<ApiResponse<CategoryResponse>> getById(@PathVariable Long id, HttpServletRequest request) {
+        return ResponseEntity.ok(ApiResponse.<CategoryResponse>builder()
+                .success(true)
+                .message("get success")
+                .data(this.categoryService.getById(id))
+                .path(request.getRequestURI())
+                .build());
     }
 
     @PostMapping
-    public CategoryResponse create(@RequestBody CategoryRequest request) {
-
-        return this.categoryService.create(request);
+    public ResponseEntity<ApiResponse<CategoryResponse>>  create(@RequestBody CategoryRequest dto, HttpServletRequest request) {
+        return ResponseEntity.ok(ApiResponse.<CategoryResponse>builder()
+                .success(true)
+                .message("create success")
+                .data(this.categoryService.create(dto))
+                .path(request.getRequestURI())
+                .build());
     }
 
     @PutMapping("{id}")
