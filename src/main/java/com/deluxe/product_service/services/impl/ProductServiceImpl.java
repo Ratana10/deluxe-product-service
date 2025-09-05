@@ -5,7 +5,9 @@ import com.deluxe.product_service.dto.ProductResponse;
 import com.deluxe.product_service.entities.Product;
 import com.deluxe.product_service.mapper.ProductMapper;
 import com.deluxe.product_service.repositories.ProductRepository;
+import com.deluxe.product_service.services.CategoryService;
 import com.deluxe.product_service.services.ProductService;
+import com.deluxe.product_service.utils.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repo;
     private final ProductMapper mapper;
+    private final CategoryService categoryService;
 
     @Override
     @CacheEvict(value = "product:list", key = "'all'")
@@ -33,7 +36,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Cacheable(value = "product:byId", key = "#id")
     public ProductResponse getById(Long id) {
-        return mapper.toResponse(repo.findById(id).orElseThrow(null));
+        categoryService.getById(id);
+        return repo.findById(id)
+                .map(mapper::toResponse)
+                .orElseThrow(()-> new NotFoundException("Product not found"));
     }
 
     @Override
@@ -41,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getByName(String name) {
         return repo.findByName(name)
                 .map(mapper::toResponse)
-                .orElse(null);
+                .orElseThrow(()-> new NotFoundException("Product not found"));
     }
 
     @Override
