@@ -30,6 +30,6 @@ public class Product {
     @Column(name = "discount_percent")
     private Integer discountPercent;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = true)
     private Boolean isActive = true;
 }
