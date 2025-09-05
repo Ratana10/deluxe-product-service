@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,4 +34,28 @@ public class Product {
 
     @Column(name = "is_active", nullable = true)
     private Boolean isActive = true;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductColor> productColors = new ArrayList<>();
+
+    public void addProductColor(ProductColor productColor) {
+        productColors.add(productColor);
+        productColor.setProduct(this);
+    }
+
+    public void removeProductColor(ProductColor productColor) {
+        productColors.remove(productColor);
+        productColor.setProduct(null);
+    }
+
 }
+//
+//    @OneToMany(
+//            mappedBy = "product",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY
+//    )
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private List<ProductColor> productColors = new ArrayList<>();

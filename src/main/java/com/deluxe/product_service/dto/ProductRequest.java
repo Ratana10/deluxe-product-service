@@ -4,29 +4,32 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class ProductRequest {
 
     @NotBlank(message = "Product name is required")
-    String name;
+    private String name;
 
     @NotNull(message = "Category is required")
     Integer categoryId;
 
-    String description;
+    private String description;
 
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than zero")
-    BigDecimal price;
+    private BigDecimal price;
 
     @NotNull(message = "Quantity is required")
     @Min(value = 0, message = "Quantity cannot be negative")
-    Integer quantity;
+    private Integer quantity;
 
     @Min(value = 0, message = "Discount percent cannot be negative")
     @Max(value = 100, message = "Discount percent cannot exceed 100")
-    Integer discountPercent;
+    private Integer discountPercent;
 
-    Boolean isActive;
+    private Boolean isActive;
+
+    private List<ProductColorRequest> productColors;
 }

@@ -20,8 +20,13 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> getAll() {
-        return this.productService.getAll();
+    public ResponseEntity<ApiResponse<List<ProductResponse>>> getAll(HttpServletRequest req) {
+        return ResponseEntity.ok(ApiResponse.<List<ProductResponse>>builder()
+                .success(true)
+                .message("get success")
+                .data(this.productService.getAll())
+                .path(req.getRequestURI())
+                .build());
     }
 
     @GetMapping("{id}")
