@@ -64,4 +64,18 @@ public class ProductController {
                 .path(request.getRequestURI())
                 .build());
     }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ApiResponse<ProductResponse>> getByName(
+            @PathVariable String name,
+            HttpServletRequest request) {
+        return ResponseEntity.ok(
+                ApiResponse.<ProductResponse>builder()
+                        .success(true)
+                        .message("get successfully")
+                        .data(productService.getByName(name))
+                        .path(request.getRequestURI())
+                        .build()
+        );
+    }
 }
