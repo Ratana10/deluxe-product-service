@@ -1,0 +1,29 @@
+<configuration>
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp />
+                <pattern><pattern>
+                    {
+                    "level": "%level",
+                    "logger": "%logger",
+                    "thread": "%thread",
+                    "message": "%message",
+                    "stack_trace": "%exception{full}",
+                    "traceId": "%X{traceId:-}",
+                    "spanId": "%X{spanId:-}"
+                    }
+                </pattern></pattern>
+                <!-- also include MDC map if you want -->
+                <mdc/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="JSON"/>
+    </root>
+
+    <!-- make your package more verbose when needed -->
+    <logger name="com.deluxe.product_service" level="DEBUG"/>
+</configuration>

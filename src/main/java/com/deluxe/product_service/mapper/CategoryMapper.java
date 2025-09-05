@@ -2,7 +2,7 @@ package com.deluxe.product_service.mapper;
 
 import com.deluxe.product_service.dto.CategoryRequest;
 import com.deluxe.product_service.dto.CategoryResponse;
-import com.deluxe.product_service.controllers.Category;
+import com.deluxe.product_service.entities.Category;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

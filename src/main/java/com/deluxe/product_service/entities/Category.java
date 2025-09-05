@@ -1,4 +1,4 @@
-package com.deluxe.product_service.controllers;
+package com.deluxe.product_service.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.deluxe.product_service.services;
 
-import com.deluxe.product_service.controllers.Category;
+import com.deluxe.product_service.entities.Category;
 import com.deluxe.product_service.dto.CategoryRequest;
 import com.deluxe.product_service.dto.CategoryResponse;
 
